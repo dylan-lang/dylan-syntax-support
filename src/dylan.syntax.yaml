@@ -1,0 +1,158 @@
+---
+name: dylan
+scopeName: source.dylan
+fileTypes: [dylan, intr]
+
+patterns:
+  - include: '#comments'
+  - include: '#top-level-forms'
+  - include: '#expressions'
+  - include: '#headers'
+
+repository:
+  $apply:
+    - file: dylan-string.inc.yaml
+      vars:
+        - line: single
+          marker: "\""
+          guard: "|(\\n)"
+
+  comments:
+    patterns:
+      - include: '#line-comment'
+      - include: '#block-comment'
+
+  line-comment:
+    name: comment.line.double-slash.dylan
+    begin: (//)
+    end: $
+    beginCaptures:
+      '1': {name: puncuation.definition.comment.dylan}
+    patterns:
+      - include: '#codetags'
+
+  codetags:
+    match: (?:\b(NOTE|XXX|HACK|FIXME|BUG|TODO)\b)
+    captures:
+      '1': {name: keyword.codetag.notation.dylan}
+
+  top-level-forms:
+    patterns:
+      - include: '#define-method'
+      - include: '#define-constant'
+
+  expressions:
+    patterns:
+      - include: '#literals'
+
+  headers:
+    patterns:
+      - name: header.key.dylan
+        match: (^[A-Za-z-]+)(:[\s]+)(.*)
+        captures:
+          - 1: {name: meta.header.key.dylan}
+          - 2: {name: punctuation.separator.header.dylan}
+          - 3: {name: meta.header.value.dylan}
+
+  literals:
+    patterns:
+      - include: '#number'
+      - include: '#boolean-constant'
+      - include: '#string-single-line'
+      - include: '#character'
+
+  boolean-constant:
+    name: constant.boolean.dylan
+    match: (?i)(#t|#f)\b
+
+  number:
+    name: constant.numeric.dylan
+    patterns:
+      - include: '#number-float'
+      - include: '#number-decimal'
+      - include: '#number-hexadecimal'
+      - include: '#number-octal'
+      - include: '#number-binary'
+      - name: invalid.illegal.name.dylan
+        match: \b[0-9]+\w+
+
+  number-float:
+    name: constant.numeric.float.dylan
+    match: |
+      (?xi)
+        (?<! \w)(?:
+          [+-]?[0-9]*\.[0-9]+ ([esdx][+-]?[0-9]+)?
+          | [+-]?[0-9]+\. ([esdx][+-]?[0-9]+)?
+          | [+-]?[0-9]+ ([esdx][+-]?[0-9]+)
+        )\b
+
+
+  number-decimal:
+    name: constant.numeric.dec.dylan
+    match: |
+      (?xi)
+        (?<![\w\.])
+          [+-]?\d+
+        \b
+
+  number-hexadecimal:
+    name: constant.numeric.hex.dylan
+    match: |
+      (?xi)
+        (?<![\w\.])
+          (\#x) \h+
+          |
+          (\#x.*)
+        \b
+    captures:
+      '1': {name: storage.type.number.dylan}
+      '2': {name: invalid.illegal.hex.dylan}
+
+  number-octal:
+    name: constant.numeric.oct.dylan
+    match: |
+      (?xi)
+        (?<![\w\.])
+          (\#o) [0-7]+
+          |
+          (\#o.*)
+        \b
+    captures:
+      '1': {name: storage.type.number.dylan}
+      '2': {name: invalid.illegal.oct.dylan}
+
+  number-binary:
+    name: constant.numeric.bin.dylan
+    match: |
+      (?xi)
+        (?<![\w\.])
+          (\#b) [01]+
+          |
+          (\#b.*)
+        \b
+    captures:
+      '1': {name: storage.type.number.dylan}
+      '2': {name: invalid.illegal.bin.dylan}
+
+  character:
+    name: string.quoted.single.dylan
+    begin: "(')"
+    end: "(')"
+    beginCaptures:
+      '1': {name: punctuation.definition.character.begin.dylan}
+    endCaptures:
+      '1': {name: punctuation.definition.character.end.dylan}
+    patterns:
+      - include: '#escaped-character'
+
+  escaped-character:
+    patterns:
+      - name: constant.character.escape.dylan
+        match: |
+          (?x)
+            \\ (
+                    \<[0-9A-Fa-f]{4}\>
+                  | [\\'"abefnrt0]
+               )
+      - name: invalid.illegal.unknown-escape.dylan
+        match: \\.

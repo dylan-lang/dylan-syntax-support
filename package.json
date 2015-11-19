@@ -1,0 +1,26 @@
+{
+  "name": "dylan-syntax-support",
+  "version": "0.1.0",
+  "description": "Dylan syntax file generation",
+  "main": "index.js",
+  "scripts": {
+    "test": "aaa"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylan-lang/dylan-syntax-support.git"
+  },
+  "keywords": [
+    "Syntax",
+    "Dylan"
+  ],
+  "author": "Bruce Mitchener, Jr.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dylan-lang/dylan-syntax-support/issues"
+  },
+  "homepage": "https://github.com/dylan-lang/dylan-syntax-support#readme",
+  "devDependencies": {
+    "syntaxdev": "0.0.10"
+  }
+}

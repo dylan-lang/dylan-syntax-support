@@ -1,0 +1,13 @@
+---
+repository:
+  string-quoted-${line}-line:
+    name: string.quoted.${line}.dylan
+    begin: (\b(${marker})
+    end: (\1)${guard}
+    beginCaptures:
+      '1': {name: punctuation.definition.string.begin.python}
+    endCaptures:
+      '1': {name: punctuation.definition.string.end.python}
+      '2': {name: invalid.illegal.newline.python}
+    patterns:
+      - include: '#string-guts'
