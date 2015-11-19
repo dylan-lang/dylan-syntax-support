@@ -67,7 +67,7 @@ Useful Reading
 .. _Atom: https://atom.io/
 .. _Sublime Text: http://www.sublimetext.com/
 .. _Textmate: https://macromates.com/
-.. _Magic Python_: https://github.com/MagicStack/MagicPython
+.. _Magic Python: https://github.com/MagicStack/MagicPython
 .. _team: http://magic.io/
 .. _Syntax definitions: http://docs.sublimetext.info/en/latest/extensibility/syntaxdefs.html
 .. _Scope naming conventions: https://manual.macromates.com/en/language_grammars#naming_conventions
