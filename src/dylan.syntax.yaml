@@ -60,6 +60,8 @@ repository:
       - include: '#boolean-constant'
       - include: '#string-single-line'
       - include: '#character'
+      - include: '#vector-literal'
+      - include: '#list-literal'
 
   boolean-constant:
     name: constant.boolean.dylan
@@ -156,3 +158,33 @@ repository:
                )
       - name: invalid.illegal.unknown-escape.dylan
         match: \\.
+
+  vector-literal:
+   name: constant.sequence.vector.dylan
+   begin: \#\[
+   end: \]
+   beginCaptures:
+     '0': {name: punctuation.vector.begin.dylan}
+   endCaptures:
+     '0': {name: punctuation.vector.end.dylan}
+   patterns:
+     - include: '#literals'
+     - name: punctuation.separator.comma.dylan
+       match: (,[\s]+)
+     - name: invalid.illegal.name.dylan
+       match: ([^,\s]*)
+
+  list-literal:
+   name: constant.sequence.list.dylan
+   begin: \#\(
+   end: \)
+   beginCaptures:
+     '0': {name: punctuation.list.begin.dylan}
+   endCaptures:
+     '0': {name: punctuation.list.end.dylan}
+   patterns:
+     - include: '#literals'
+     - name: punctuation.separator.comma.dylan
+       match: (,[\s]+)
+     - name: invalid.illegal.name.dylan
+       match: ([^,\s]*)
