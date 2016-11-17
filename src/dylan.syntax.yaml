@@ -27,7 +27,7 @@ repository:
     begin: (//)
     end: $
     beginCaptures:
-      '1': {name: puncuation.definition.comment.dylan}
+      '1': {name: punctuation.definition.comment.dylan}
     patterns:
       - include: '#codetags'
 
